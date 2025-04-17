@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Products</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="bg-[#000]">
+        <div class="max-w-[90%] m-auto text-white flex justify-between items-center p-4">
+            <a href="index.html" class="flex items-center justify-center">
+                <img src="images/Digital Deals Logo.png" alt="logo" class="w-10 h-10 rounded-full">
+                <p class="ml-2">DigitalDeals</p>
+            </a>
+            <nav class="flex items-center space-x-4">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="products.html" class="nav-link">Shop</a>
+                <a href="#" class="nav-link">Account</a>
+                <a href="#" class="cart-logo nav-link">Cart (0)</a>
+            </nav>
+
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="flex mt-10 max-w-[90%] m-auto">
+        <!-- Sidebar -->
+        <aside class="w-1/4 text-white p-4 rounded-lg shadow-md">
+            <h2 class="text-lg font-bold mb-4">Categories</h2>
+            <ul class="space-y-2">
+                <li><a href="#" class="text-[#9c33ff] hover:underline category-link" data-category="Smartphones">Phones</a></li>
+                <li><a href="#" class="text-[#9c33ff] hover:underline category-link" data-category="Laptops">Computers</a></li>
+                <li><a href="#" class="text-[#9c33ff] hover:underline category-link" data-category="Accessories">Accessories</a></li>
+            </ul>
+        </aside>
+
+        <!-- Products  -->
+        <main class="w-3/4 ml-6">
+            <h1 class="text-4xl text-[#9c33ff] mb-6">All Products</h1>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="products-grid">
+
+            </div>
+        </main>
+    </div>
+
+    <script src="database.js"></script>
+    <script src="products.js"></script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!-- product.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Details</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-black text-white">
+    <header class="bg-[#000]">
+        <div class="max-w-[90%] m-auto text-white flex justify-between items-center p-4">
+            <a href="index.html" class="flex items-center justify-center">
+                <img src="images/Digital Deals Logo.png" alt="logo" class="w-10 h-10 rounded-full">
+                <p class="ml-2">DigitalDeals</p>
+            </a>
+            <nav class="flex items-center space-x-4">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="products.html" class="nav-link">Shop</a>
+                <a href="#" class="nav-link">Account</a>
+                <a href="#" class="cart-logo nav-link">Cart (0)</a>
+            </nav>
+
+        </div>
+    </header>
+    <div id="product-details" class="flex flex-col lg:flex-row items-center gap-10 max-w-[90%] ml-[10%] mt-20 mb-[200px]"></div>
+
+    <h2 class="text-3xl text-[#9c33ff] mt-10 mb-4 text-center">Related Products</h2>
+    <div id="related-products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-[90%] mx-auto"></div>
+
+    <script src="database.js"></script>
+    <script src="product-detail.js"></script>
+</body>
+</html>
