@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Products</title>
+    <title>Cart</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="flex flex-col min-h-screen">
     <!-- Header -->
     <header class="bg-white">
         <div class="max-w-[90%] m-auto   flex justify-between items-center p-4">
             <a href="index.html" class="flex items-center justify-center ">
-
                 <p class="ml-2 text-2xl">𝘿𝙞𝙜𝙞𝙩𝙖𝙡 𝘿𝙚𝙖𝙡𝙨.</p>
             </a>
             <nav class="flex items-center space-x-4 ">
@@ -23,37 +22,24 @@
                     <img src="images/icons/cart.svg" alt="cart icon">
                     <p class="cart-logo"> (0)</p>
                 </a>
-                <a href="profile.html" class="nav-link "><img src="images/icons/profile.svg" class="w-8 h-8" alt="account icon"></a>
+                <a href="profile.html" class="nav-link "><img src="images/icons/profile.svg" class="w-8 h-8" alt="profile icon"></a>
             </nav>
         </div>
     </header>
 
     <!-- Main Content -->
-    <div class="flex mt-10 max-w-[90%] m-auto mb-10">
-        <!-- Sidebar -->
-        <aside class="w-1/4 black p-4 rounded-lg shadow-md ">
-            <h2 class="text-lg font-bold mb-4">products Categories</h2>
-            <ul class="space-y-2 mx-5">
-                <li><a href="#" class="text-[#424242] hover:underline category-link" data-category="Watches">Watches</a></li>
-                <li><a href="#" class="text-[#424242] hover:underline category-link"
-                    data-category="Laptops">Laptops</a></li>
-                <li><a href="#" class="text-[#424242] hover:underline category-link" data-category="TV">TV & Home</a></li>
-                <li><a href="#" class="text-[#424242] hover:underline category-link" data-category="Phones">Phones</a></li>
-                <li><a href="#" class="text-[#424242] hover:underline category-link" data-category="Accessories">Accessories</a></li>
-                <li><a href="#" class="text-[#424242] hover:underline category-link" data-category="Ipads">Ipads</a></li>
-                <li><a href="#" class="text-[#424242] hover:underline category-link" data-category="All">All products</a></li>
-            </ul>
-        </aside>
+    <main class="flex-grow max-w-[90%] m-auto mt-10">
+        <h1 class="text-2xl font-bold mb-4">Your Cart</h1>
+        <div id="cart-items" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Cart items will be dynamically added here -->
+        </div>
+        <button id="clear-cart-btn" class="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+            Clear All
+        </button>
+    </main>
 
-        <!-- Products  -->
-        <main class="w-3/4 ml-6">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="products-grid">
-
-            </div>
-        </main>
-    </div>
     <!-- Footer -->
-    <div class="footer  mt-20 p-5  flex justify-between items-center text-[#222]">
+    <div class="footer  mt-20 p-5 flex justify-between items-center text-[#222]">
         <div>
             <img src="images/icons/shipping.svg" alt="">
             <p class="font-bold">Free shipping</p>
@@ -78,6 +64,6 @@
     <p class="text-[#666] ml-[78%]">@2023 Copyright Wic Digital Deals</p>
 
     <script src="database.js"></script>
-    <script src="products.js"></script>
+    <script src="cart.js"></script>
 </body>
 </html>

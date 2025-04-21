@@ -5,28 +5,58 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Product Details</title>
+  <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-black text-white">
-    <header class="bg-[#000]">
-        <div class="max-w-[90%] m-auto text-white flex justify-between items-center p-4">
-            <a href="index.html" class="flex items-center justify-center">
-                <img src="images/Digital Deals Logo.png" alt="logo" class="w-10 h-10 rounded-full">
-                <p class="ml-2">DigitalDeals</p>
+<body >
+    <header class="bg-white">
+        <div class="max-w-[90%] m-auto   flex justify-between items-center p-4">
+            <a href="index.html" class="flex items-center justify-center ">
+
+                <p class="ml-2 text-2xl">𝘿𝙞𝙜𝙞𝙩𝙖𝙡 𝘿𝙚𝙖𝙡𝙨.</p>
             </a>
-            <nav class="flex items-center space-x-4">
+            <nav class="flex items-center space-x-4 ">
                 <a href="index.html" class="nav-link">Home</a>
                 <a href="products.html" class="nav-link">Shop</a>
-                <a href="#" class="nav-link">Account</a>
-                <a href="#" class="cart-logo nav-link">Cart (0)</a>
+                <!-- <button class="login-btn">Login</button> -->
+                <a href="cart.html" class="nav-link flex justify-between items-center">
+                    <img src="images/icons/cart.svg" alt="cart icon">
+                    <p class="cart-logo"> (0)</p>
+                </a>
+                <a href="profile.html" class="nav-link "><img src="images/icons/profile.svg" class="w-8 h-8" alt="account icon"></a>
             </nav>
-
         </div>
     </header>
-    <div id="product-details" class="flex flex-col lg:flex-row items-center gap-10 max-w-[90%] ml-[10%] mt-20 mb-[200px]"></div>
+    <div id="product-details"
+    class="flex flex-col lg:flex-row items-center gap-10 max-w-[90%] ml-[10%] mt-20 mb-[200px]"></div>
 
-    <h2 class="text-3xl text-[#9c33ff] mt-10 mb-4 text-center">Related Products</h2>
-    <div id="related-products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-[90%] mx-auto"></div>
+    <h2 class="text-2xl text-black mt-10 mb-4 ml-5">Related Products</h2>
+    <div id="related-products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-[90%] mx-auto mb-10"></div>
+
+    <!-- Footer -->
+    <div class="footer  mt-20 p-5  flex justify-between items-center text-[#222]">
+        <div>
+            <img src="images/icons/shipping.svg" alt="">
+            <p class="font-bold">Free shipping</p>
+            <p class="text-[#666]">Free shipping on all orders over $150</p>
+        </div>
+        <div>
+            <img src="images/icons/dollar.svg" alt="">
+            <p class="font-bold">Money Guarantee</p>
+            <p class="text-[#666]">within 30 days for an exchange</p>
+        </div>
+        <div>
+            <img src="images/icons/support.svg" alt="">
+            <p class="font-bold">online support</p>
+            <p class="text-[#666]">24 hours a day , 7 days a week</p>
+        </div>
+        <div>
+            <img src="images/icons/payment.svg" alt="">
+            <p class="font-bold">Flexible Payment</p>
+            <p class="text-[#666]">Pay with multiple credit cards</p>
+        </div>
+    </div>
+    <p class="text-[#666] ml-[78%]">@2023 Copyright Wic Digital Deals</p>
 
     <script src="database.js"></script>
     <script src="product-detail.js"></script>

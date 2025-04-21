@@ -4,7 +4,7 @@
         description: "Apple iPhone 14 Pro with 128GB storage and A16 Bionic chip in sleek black.",
         price: 999,
         images: ["images/iphone14pro-black.png"],
-        category: "Smartphones",
+        category: "Phones",
         properties: {
             brand: "Apple",
             color: "Black",
@@ -17,7 +17,7 @@
         description: "Standard iPhone 14 in black, featuring A15 Bionic chip and dual-camera system.",
         price: 799,
         images: ["images/iphone14pro-black.png"],
-        category: "Smartphones",
+        category: "Phones",
         properties: {
             brand: "Apple",
             color: "Black",
@@ -30,7 +30,7 @@
         description: "Samsung's flagship Galaxy S22 with 128GB storage and triple-lens camera system.",
         price: 750,
         images: ["images/iphone14pro-black.png"],
-        category: "Smartphones",
+        category: "Phones",
         properties: {
             brand: "Samsung",
             color: "Phantom Black",
@@ -68,7 +68,7 @@
         title: "MacBook 14 Pro",
         description: "Apple MacBook Pro 14-inch with M1 Pro chip, 16GB RAM, and 512GB SSD for productivity and details.",
         price: 1999,
-        images: ["images/laptops-category.png"],
+        images: ["images/laptops.png"],
         category: "Laptops",
         properties: {
             brand: "Apple",
@@ -81,7 +81,7 @@
         title: "ASUS ROG Gaming Laptop",
         description: "High-performance gaming laptop with RTX 3060 GPU, 16GB RAM and 1TB SSD.",
         price: 1499,
-        images: ["images/laptops-category.png"],
+        images: ["images/laptops.png"],
         category: "Laptops",
         properties: {
             brand: "ASUS",
@@ -95,7 +95,7 @@
         title: "MSI Laptop LED",
         description: "MSI LED-backlit laptop with Intel i5, 8GB RAM, and 512GB SSD for daily productivity and gaming.",
         price: 799,
-        images: ["images/laptops-category.png"],
+        images: ["images/laptops.png"],
         category: "Laptops",
         properties: {
             brand: "MSI",
@@ -110,7 +110,7 @@
         description: "Budget-friendly smartphone with AMOLED display, Snapdragon processor, and 5000mAh battery.",
         price: 199,
         images: ["images/iphone14pro-black.png"],
-        category: "Smartphones",
+        category: "Phones",
         properties: {
             brand: "Xiaomi",
             storage: "128GB",
