@@ -112,14 +112,17 @@ function displayCartItems() {
         const item = document.createElement('div');
         item.className = 'item-card text-white p-4 rounded-lg shadow-xl';
         item.innerHTML = `
-            <img src="${product.images[0]}" alt="${product.title}" class="ml-[20%] w-30 h-40 object-cover rounded-md">
-            <h2 class="text-lg font-bold mt-2">${product.title}</h2>
-            <p class="text-sm text-gray-600">${product.description}</p>
-            <p class="text-lg font-bold mt-2 text-[#5C6BC0]">$${product.price}</p>
-            <div class="flex justify-between items-center">
-                <button class="confirm-from-cart-btn flex justify-center items-center gap-4">Purchase <img src="images/icons/success.svg" class="w-5 h-5" alt="" /></button>
-                <button class="remove-from-cart-btn flex justify-center items-center gap-4">Remove <img src="images/icons/delete.svg" alt="" /></button>
+            <div class="flex flex-col justify-between h-full">
+                <img src="${product.images[0]}" alt="${product.title}" class="ml-[15%] w-[250px] h-35 object-cover rounded-md">
+                <h2 class="text-lg font-bold mt-2">${product.title}</h2>
+                <p class="text-sm text-gray-600">${product.description}</p>
+                <p class="text-lg font-bold mt-2 text-[#5C6BC0]">$${product.price}</p>
+                <div class="flex justify-between items-center mt-auto">
+                    <button class="confirm-from-cart-btn flex justify-center items-center gap-4">Purchase <img src="images/icons/success.svg" class="w-5 h-5" alt="" /></button>
+                    <button class="remove-from-cart-btn flex justify-center items-center gap-4">Remove <img src="images/icons/delete.svg" alt="" /></button>
+                </div>
             </div>
+
         `;
         item.querySelector('.remove-from-cart-btn').addEventListener('click', () => {
             removeItemFromCart(product);
