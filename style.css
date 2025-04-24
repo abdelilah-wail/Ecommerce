@@ -23,6 +23,19 @@ body {
     color: black;
     border:2px solid black ;
 }
+.logout-btn{
+    background-color: red;
+    color: white;
+    border-radius: 10px;
+    border: 2px solid red;
+    padding: 10px;
+    transition: all 0.5s ease;
+}
+.logout-btn:hover{
+    background-color: white;
+    color: red;
+    border:2px solid red ;
+}
 .signup-btn{
     background-color: #039BE5;
     color: white;
@@ -81,6 +94,14 @@ body {
     border-radius: 10px;
     margin-top: 250px;
 }
+
+
+
+
+
+
+
+
 /* !products html */
 aside{
     height: fit-content;
@@ -100,6 +121,44 @@ aside{
     color: black;
     border:2px solid black ;
 }
+
+/* !product-detail page  */
+/* Storage Options Styling */
+.storage-option {
+    transition: all 0.2s ease;
+    border: 1px solid #e5e7eb;
+}
+
+.storage-option:hover {
+    border-color: red;
+    transform: translateY(-1px);
+}
+
+.storage-option.bg-blue-500 {
+    border-color: red;
+}
+
+/* Add to Cart Button */
+#add-to-cart-btn {
+    transition: background-color 0.2s ease;
+}
+
+/* Notification */
+.fixed-notification {
+    animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+
 /* !cart page  */
 .remove-from-cart-btn{
     background-color: #E91E63;
@@ -232,7 +291,10 @@ aside{
   }
 
 
-  /* Login Button */
+
+
+
+  /*Login Button */
   .login-button {
     width: 100%;
     padding: 10px;
@@ -277,6 +339,11 @@ aside{
       padding: 20px;
     }
   }
+
+
+
+
+
 
 
 /* !signup page  */
@@ -338,3 +405,11 @@ aside{
     background-color: black;
     border-radius: 10px;
 }
+
+.hidden {
+    display: none !important;
+  }
+
+  .nav-link {
+    transition: all 0.2s ease;
+  }

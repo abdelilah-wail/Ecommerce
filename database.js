@@ -1,16 +1,21 @@
     const products = [
         {
         title: "iPhone 14 Pro Black",
-        description: "Apple iPhone 14 Pro with 128GB storage and A16 Bionic chip in sleek black.",
+        description: "Apple iPhone 14 Pro  A16 Bionic chip in sleek black.",
         price: 999,
         images: ["images/iphone14pro-black.png"],
         category: "Phones",
         properties: {
             brand: "Apple",
             color: "Black",
-            storage: "128GB",
             screen: "6.1 inch OLED"
-        }
+        },
+        storageOptions: [
+            { capacity: "128GB", price: 999 },
+            { capacity: "256GB", price: 1099 },
+            { capacity: "512GB", price: 1249 }
+        ],
+        quantity: 1,
         },
         {
         title: "iPhone 14 Black",
@@ -23,20 +28,31 @@
             color: "Black",
             storage: "128GB",
             screen: "6.1 inch OLED"
-        }
+        },
+        storageOptions: [
+            { capacity: "128GB", price: 999 },
+            { capacity: "256GB", price: 1099 },
+            { capacity: "512GB", price: 1249 }
+        ],
+        quantity: 1,
         },
         {
         title: "Samsung Galaxy S22",
-        description: "Samsung's flagship Galaxy S22 with 128GB storage and triple-lens camera system.",
+        description: "Samsung's flagship Galaxy S22 with triple-lens camera system.",
         price: 750,
         images: ["images/iphone14pro-black.png"],
         category: "Phones",
         properties: {
             brand: "Samsung",
             color: "Phantom Black",
-            storage: "128GB",
             screen: "6.1 inch AMOLED"
-        }
+        },
+        storageOptions: [
+            { capacity: "128GB", price: 999 },
+            { capacity: "256GB", price: 1099 },
+            { capacity: "512GB", price: 1249 }
+        ],
+        quantity: 1,
         },
         {
         title: "Sony WH-1000XM4",
@@ -49,7 +65,8 @@
             type: "Headphones",
             noiseCancelling: true,
             batteryLife: "30 hours"
-        }
+        },
+        quantity: 1,
         },
         {
         title: "Apple AirPods",
@@ -62,7 +79,8 @@
             type: "Earbuds",
             wireless: true,
             batteryLife: "24 hours (with case)"
-        }
+        },
+        quantity: 1,
         },
         {
         title: "MacBook 14 Pro",
@@ -75,7 +93,8 @@
             RAM: "16GB",
             storage: "512GB SSD",
             screen: "14 inch Retina"
-        }
+        },
+        quantity: 1,
         },
         {
         title: "ASUS ROG Gaming Laptop",
@@ -89,7 +108,8 @@
             RAM: "16GB",
             storage: "1TB SSD",
             screen: "15.6 inch FHD 144Hz"
-        }
+        },
+        quantity: 1,
         },
         {
         title: "MSI Laptop LED",
@@ -103,7 +123,8 @@
             RAM: "8GB",
             storage: "512GB SSD",
             screen: "15.6 inch LED"
-        }
+        },
+        quantity: 1,
         },
         {
         title: "Xiaomi Redmi Note 11",
@@ -113,9 +134,14 @@
         category: "Phones",
         properties: {
             brand: "Xiaomi",
-            storage: "128GB",
             battery: "5000mAh",
             screen: "6.43 inch AMOLED"
-        }
+        },
+        storageOptions: [
+            { capacity: "128GB", price: 999 },
+            { capacity: "256GB", price: 1099 },
+            { capacity: "512GB", price: 1249 }
+        ],
+        quantity: 1,
         }
     ];

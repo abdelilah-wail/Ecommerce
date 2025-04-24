@@ -1,81 +1,16 @@
-// // Load cart data from localStorage
-// let cart = [];
-// let cartCount = 0;
-
-// function loadCartFromLocalStorage() {
-//     const storedCart = localStorage.getItem('cart');
-//     if (storedCart) {
-//         cart = JSON.parse(storedCart);
-//         cartCount = cart.length;
-//     }
-// }
-
-// // Function to update cart count in localStorage
-// function updateCartCount() {
-//     localStorage.setItem('cartCount', cartCount);
-//     const cartLink = document.querySelector('.cart-logo');
-//     if (cartLink) {
-//         cartLink.textContent = `Cart (${cartCount})`;
-//     }
-// }
-
-// // Function to display cart items
-// function displayCartItems() {
-//     const cartItemsDiv = document.getElementById('cart-items');
-//     if (!cartItemsDiv) return; // Exit if cartItemsDiv is null
-
-//     cartItemsDiv.innerHTML = '';
-//     cart.forEach(product => {
-//         const item = document.createElement('div');
-//         item.className = 'item-card text-white p-4 rounded-lg shadow-xl';
-//         item.innerHTML = `
-//             <img src="${product.images[0]}" alt="${product.title}" class="ml-[20%] w-30 h-40 object-cover rounded-md">
-//             <h2 class="text-lg font-bold mt-2">${product.title}</h2>
-//             <p class="text-sm text-gray-600">${product.description}</p>
-//             <p class="text-lg font-bold mt-2 text-[#5C6BC0]">$${product.price}</p>
-//             <button class="remove-from-cart-btn">Remove</button>
-//         `;
-//         item.querySelector('.remove-from-cart-btn').addEventListener('click', () => {
-//             removeItemFromCart(product);
-//         });
-//         cartItemsDiv.appendChild(item);
-//     });
-// }
-
-// // Function to remove an item from the cart
-// function removeItemFromCart(product) {
-//     const index = cart.indexOf(product);
-//     if (index !== -1) {
-//         cart.splice(index, 1);
-//         cartCount--;
-//         updateCartCount();
-//         saveCartToLocalStorage();
-//         displayCartItems();
-//     }
-// }
-
-// // Function to save cart data to localStorage
-// function saveCartToLocalStorage() {
-//     localStorage.setItem('cart', JSON.stringify(cart));
-// }
-
-// // Clear cart functionality
-// const clearCartBtn = document.getElementById('clear-cart-btn');
-// if (clearCartBtn) {
-//     clearCartBtn.addEventListener('click', () => {
-//         cart = [];
-//         cartCount = 0;
-//         updateCartCount();
-//         saveCartToLocalStorage();
-//         displayCartItems();
-//     });
-// }
-
-// loadCartFromLocalStorage();
-// displayCartItems();
-// Load cart data from localStorage
+// Initialize cart from localStorage
 let cart = [];
 
+// Load cart data when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    loadCartFromLocalStorage();
+    displayCartItems();
+    updateCartTotal();
+    updateNavbarCartCount();
+    setupEventListeners();
+});
+
+// Load cart from localStorage
 function loadCartFromLocalStorage() {
     const storedCart = localStorage.getItem('cart');
     if (storedCart) {
@@ -83,86 +18,173 @@ function loadCartFromLocalStorage() {
     }
 }
 
-// Function to calculate the total number of items in the cart
-function calculateTotalItems(cart) {
-    return cart.length; // Simply return the length of the cart array
-}
-
-// Function to update the cart count in the navbar
-function updateNavbarCartCount() {
-    const cartLink = document.querySelector('.cart-logo');
-    if (cartLink) {
-        const totalItems = calculateTotalItems(cart); // Calculate total items
-        cartLink.textContent = `(${totalItems})`;
-    }
-}
-
-// Save cart data to localStorage
-function saveCartToLocalStorage() {
-    localStorage.setItem('cart', JSON.stringify(cart));
-}
-
-// Display cart items
+// Display all cart items
 function displayCartItems() {
     const cartItemsDiv = document.getElementById('cart-items');
     if (!cartItemsDiv) return;
 
     cartItemsDiv.innerHTML = '';
-    cart.forEach(product => {
+
+    if (cart.length === 0) {
+        cartItemsDiv.innerHTML = '<p class="text-lg">Your cart is empty</p>';
+        return;
+    }
+
+    cart.forEach((product, index) => {
         const item = document.createElement('div');
-        item.className = 'item-card text-white p-4 rounded-lg shadow-xl';
+        item.className = 'item-card bg-white p-4 rounded-lg shadow-xl mb-4';
+        item.dataset.productId = index;
+
         item.innerHTML = `
-            <div class="flex flex-col justify-between h-full">
-                <img src="${product.images[0]}" alt="${product.title}" class="ml-[15%] w-[250px] h-35 object-cover rounded-md">
-                <h2 class="text-lg font-bold mt-2">${product.title}</h2>
-                <p class="text-sm text-gray-600">${product.description}</p>
-                <p class="text-lg font-bold mt-2 text-[#5C6BC0]">$${product.price}</p>
-                <div class="flex justify-between items-center mt-auto">
-                    <button class="confirm-from-cart-btn flex justify-center items-center gap-4">Purchase <img src="images/icons/success.svg" class="w-5 h-5" alt="" /></button>
-                    <button class="remove-from-cart-btn flex justify-center items-center gap-4">Remove <img src="images/icons/delete.svg" alt="" /></button>
+            <div class="flex flex-col gap-4">
+                <img src="${product.images[0]}" alt="${product.title}"
+                     class="w-full ml-[25%] md:w-32 h-32 object-contain rounded-md">
+
+                <div class="flex-grow">
+                    <h2 class="text-lg font-bold">${product.title}</h2>
+                    <p class="text-gray-600 text-sm mb-2">${product.description}</p>
+
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <button class="decrease-quantity bg-gray-200 px-3 py-1 rounded-l hover:bg-gray-300">
+                                -
+                            </button>
+                            <span class="quantity-display bg-gray-100 px-4 py-1">
+                                ${product.quantity}
+                            </span>
+                            <button class="increase-quantity bg-gray-200 px-3 py-1 rounded-r hover:bg-gray-300">
+                                +
+                            </button>
+                        </div>
+
+                        <p class="text-lg font-bold text-[#5C6BC0]">
+                            $${(product.price * product.quantity).toFixed(2)}
+                        </p>
+                    </div>
+
+                    <div class="mt-4 flex justify-between space-x-2">
+                        <button class="remove-from-cart-btn flex items-center justify-center gap-2 w-full
+                                      bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded transition-colors">
+                            <img src="images/icons/delete.svg" alt="Remove" class="w-4 h-4">
+                            <span>Remove</span>
+                        </button>
+
+                        <button class="confirm-from-cart-btn flex items-center justify-center gap-2 w-full
+                                      bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded transition-colors">
+                            <img src="images/icons/success.svg" alt="Purchase" class="w-4 h-4">
+                            <span>Purchase</span>
+                        </button>
+                    </div>
                 </div>
             </div>
-
         `;
-        item.querySelector('.remove-from-cart-btn').addEventListener('click', () => {
-            removeItemFromCart(product);
-        });
+
         cartItemsDiv.appendChild(item);
     });
 }
 
-// Remove item from cart
-function removeItemFromCart(product) {
-    const index = cart.indexOf(product);
-    if (index !== -1) {
-        cart.splice(index, 1); // Remove the product from the cart array
-        saveCartToLocalStorage(); // Save updated cart data
-        displayCartItems(); // Re-render cart items
-        updateNavbarCartCount(); // Update the navbar cart count
+// Update the cart total price display
+function updateCartTotal() {
+    const totalPriceElement = document.querySelector('.Total-cart-price');
+    if (totalPriceElement) {
+        const total = calculateCartTotal();
+        totalPriceElement.textContent = `Total: $${total.toFixed(2)}`;
     }
 }
 
-// Clear cart functionality
-const clearCartBtn = document.getElementById('clear-cart-btn');
-if (clearCartBtn) {
-    clearCartBtn.addEventListener('click', () => {
-        cart = []; // Clear the cart array
-        saveCartToLocalStorage(); // Save empty cart data
-        displayCartItems(); // Re-render cart items
-        updateNavbarCartCount(); // Update the navbar cart count
+// Calculate total cart value
+function calculateCartTotal() {
+    return cart.reduce((total, product) => {
+        return total + (product.price * product.quantity);
+    }, 0);
+}
+
+// Update navbar cart count
+function updateNavbarCartCount() {
+    const totalItems = calculateTotalItems();
+    const cartLinks = document.querySelectorAll('.cart-logo');
+
+    cartLinks.forEach(link => {
+        link.textContent = `(${totalItems})`;
     });
 }
 
-// Load cart data and update navbar cart count on page load
-loadCartFromLocalStorage();
-displayCartItems();
-updateNavbarCartCount();
+// Calculate total number of items (sum of quantities)
+function calculateTotalItems() {
+    return cart.reduce((total, product) => total + product.quantity, 0);
+}
 
+// Setup event listeners
+function setupEventListeners() {
+    // Clear cart button
+    const clearCartBtn = document.getElementById('clear-cart-btn');
+    if (clearCartBtn) {
+        clearCartBtn.addEventListener('click', clearCart);
+    }
+}
+
+// Handle quantity changes and removals
+document.addEventListener('click', function(e) {
+    const itemCard = e.target.closest('.item-card');
+    if (!itemCard) return;
+
+    const productId = parseInt(itemCard.dataset.productId);
+    const product = cart[productId];
+
+    // Increase quantity
+    if (e.target.classList.contains('increase-quantity')) {
+        product.quantity += 1;
+        saveCartAndRefresh();
+    }
+
+    // Decrease quantity
+    if (e.target.classList.contains('decrease-quantity')) {
+        if (product.quantity > 1) {
+            product.quantity -= 1;
+            saveCartAndRefresh();
+        } else {
+            removeItemFromCart(productId);
+        }
+    }
+
+    // Remove item
+    if (e.target.classList.contains('remove-from-cart-btn') ||
+       e.target.closest('.remove-from-cart-btn')) {
+        removeItemFromCart(productId);
+    }
+});
+
+// Remove item from cart
+function removeItemFromCart(productId) {
+    cart.splice(productId, 1);
+    saveCartAndRefresh();
+}
+
+// Clear entire cart
+function clearCart() {
+    if (confirm('Are you sure you want to clear your cart?')) {
+        cart = [];
+        saveCartAndRefresh();
+    }
+}
+
+// Save cart and refresh display
+function saveCartAndRefresh() {
+    saveCartToLocalStorage();
+    displayCartItems();
+    updateCartTotal();
+    updateNavbarCartCount();
+}
+
+// Save cart to localStorage
+function saveCartToLocalStorage() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+// Navigation active state
 const currentPage = window.location.pathname.split("/").pop();
-console.log(currentPage);
 document.querySelectorAll(".nav-link").forEach(link => {
-    console.log(link.getAttribute("href"));
     if (link.getAttribute("href") === currentPage) {
-    link.classList.add("border-b-2", "border-black", "pb-1");
+        link.classList.add("border-b-2", "border-black", "pb-1");
     }
 });
