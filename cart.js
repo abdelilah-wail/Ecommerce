@@ -37,7 +37,7 @@ function displayCartItems() {
 
         item.innerHTML = `
             <div class="flex flex-col gap-4">
-                <img src="${product.images[0]}" alt="${product.title}"
+                <img src="${Array.isArray(product.images) ? product.images[0] : product.images[product.colorOptions ? product.colorOptions[0] : '']}"
                      class="w-full ml-[25%] md:w-32 h-32 object-contain rounded-md">
 
                 <div class="flex-grow">
@@ -151,6 +151,13 @@ document.addEventListener('click', function(e) {
     if (e.target.classList.contains('remove-from-cart-btn') ||
        e.target.closest('.remove-from-cart-btn')) {
         removeItemFromCart(productId);
+    }
+
+    // Purchase item
+    if (e.target.classList.contains('confirm-from-cart-btn') ||
+       e.target.closest('.confirm-from-cart-btn')) {
+        // Redirect to purchase page
+        window.location.href = 'purchase.html';
     }
 });
 

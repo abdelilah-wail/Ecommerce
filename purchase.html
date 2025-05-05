@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Order Summary</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <script src="cart.js"></script>
+    <script src="database.js"></script>
+    <style>
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
+        .cart-card {
+            display: flex;
+            max-width: 90%;
+            width: 100%;
+            background: white;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .cart-image {
+            flex: 1;
+            background-image: url(images/payment.jpg);
+            background-size: cover;
+        }
+
+        .cart-form {
+            flex: 1;
+            padding: 2rem;
+        }
+
+        .summary-details {
+            display: flex;
+            justify-content: space-between;
+            /* padding: 0.5rem 0; */
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .summary-details.total {
+            font-weight: bold;
+            border-bottom: none;
+            /* padding-top: 1rem; */
+        }
+    </style>
+</head>
+
+<body class="bg-gray-900">
+    <div class="cart-card">
+        <div class="cart-image hidden md:block"></div>
+
+        <div class="cart-form">
+            <div class="text-center mb-8">
+                <h2 class="mt-4 text-2xl font-bold text-gray-900">Order Summary</h2>
+            </div>
+
+            <div id="error-message"
+                class="hidden bg-red-100 border border-red-400 text-red-700 px-3 py-3 rounded relative mb-3">
+                <span id="error-text"></span>
+            </div>
+
+            <form id="checkoutForm" class="space-y-6">
+                <div>
+                    <label for="discount" class="block text-sm font-medium text-gray-700">Discount Code</label>
+                    <div>
+                        <input id="discount" name="discount" type="text" placeholder="Enter promo code"
+                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    </div>
+                </div>
+                <div>
+                    <label for="address" class="block text-sm font-medium text-gray-700">Delivery Location</label>
+                    <div>
+                        <input id="address" name="address" type="text" placeholder="Enter your address"
+                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    </div>
+                </div>
+                <div>
+                    <label for="card" class="block text-sm font-medium text-gray-700">Payment Card</label>
+                    <div>
+                        <input id="card" name="card" type="text" placeholder="Enter card number"
+                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    </div>
+                </div>
+
+                <div class="summary-details">
+                    <span>Subtotal</span>
+                    <span>$2347.00</span>
+                </div>
+                <div class="summary-details">
+                    <span>Estimated Tax</span>
+                    <span>$50.00</span>
+                </div>
+                <div class="summary-details">
+                    <span>Shipping</span>
+                    <span>$29.00</span>
+                </div>
+                <div class="summary-details total">
+                    <span>Total</span>
+                    <span>$2426.00</span>
+                </div>
+
+                <div>
+                    <button type="submit"
+                        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        Proceed to Checkout
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

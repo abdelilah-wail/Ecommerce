@@ -44,6 +44,11 @@
     <div class="flex mt-10 max-w-[90%] m-auto mb-10">
         <!-- Sidebar -->
         <aside class="w-1/4 black p-4 rounded-lg shadow-md ">
+            <h2 class="text-lg font-bold mb-4">Search by Title or Brand </h2>
+            <div class="mb-6">
+                <input type="text" id="product-search" placeholder="Title // Brand"
+                       class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5C6BC0]">
+            </div>
             <h2 class="text-lg font-bold mb-4">products Categories</h2>
             <ul class="space-y-2 mx-5">
                 <li><a href="#" class="text-[#424242] hover:underline category-link" data-category="Watches">Watches</a></li>
@@ -90,7 +95,8 @@
     <p class="text-[#666] ml-[78%]">@2023 Copyright Wic Digital Deals</p>
 
     <script src="database.js"></script>
-    <script src="products.js"></script>
+    <!-- <script src="products.js"></script> -->
+    <script src="products.js" type="module"></script>
     <script src="auth.js" type="module"></script>
     <script src="navbar.js" type="module"></script>
 </body>

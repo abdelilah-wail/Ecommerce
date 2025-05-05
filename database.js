@@ -1,32 +1,38 @@
     const products = [
         {
-        title: "iPhone 14 Pro Black",
-        description: "Apple iPhone 14 Pro  A16 Bionic chip in sleek black.",
-        price: 999,
-        images: ["images/iphone14pro-black.png"],
-        category: "Phones",
-        properties: {
-            brand: "Apple",
-            color: "Black",
-            screen: "6.1 inch OLED"
-        },
-        storageOptions: [
-            { capacity: "128GB", price: 999 },
-            { capacity: "256GB", price: 1099 },
-            { capacity: "512GB", price: 1249 }
-        ],
-        quantity: 1,
+            title: "iPhone 14 Pro",
+            description: "Apple iPhone 14 Pro with A16 Bionic chip.",
+            price: 999,
+            images: {
+                "Black": "images/iphone14pro-black.png",
+                "Silver": "images/iphone14pro-silver.png",
+                "Gold": "images/iphone14pro-gold.png"
+            },
+            category: "Phones",
+            properties: {
+                brand: "Apple",
+                screen: "6.1 inch OLED"
+            },
+            storageOptions: [
+                { capacity: "128GB", price: 999 },
+                { capacity: "256GB", price: 1099 },
+                { capacity: "512GB", price: 1249 }
+            ],
+            colorOptions: ["Black", "Silver", "Gold"],
+            quantity: 1,
         },
         {
-        title: "iPhone 14 Black",
-        description: "Standard iPhone 14 in black, featuring A15 Bionic chip and dual-camera system.",
+        title: "iPhone 14 ",
+        description: "Standard iPhone 14 , featuring A15 Bionic chip and dual-camera system.",
         price: 799,
-        images: ["images/iphone14pro-black.png"],
+        images: {
+            "Black": "images/iphone14pro-black.png",
+            "Silver": "images/iphone14pro-silver.png",
+            "Gold": "images/iphone14pro-gold.png"
+        },
         category: "Phones",
         properties: {
             brand: "Apple",
-            color: "Black",
-            storage: "128GB",
             screen: "6.1 inch OLED"
         },
         storageOptions: [
@@ -34,13 +40,18 @@
             { capacity: "256GB", price: 1099 },
             { capacity: "512GB", price: 1249 }
         ],
+        colorOptions: ["Black", "Silver", "Gold"],
         quantity: 1,
         },
         {
         title: "Samsung Galaxy S22",
         description: "Samsung's flagship Galaxy S22 with triple-lens camera system.",
         price: 750,
-        images: ["images/iphone14pro-black.png"],
+        images: {
+            "Black": "images/Samsung-Black.png",
+            "Silver": "images/Samsung-Silver.png",
+            "Gold": "images/Samsung-Gold.png"
+        },
         category: "Phones",
         properties: {
             brand: "Samsung",
@@ -52,6 +63,7 @@
             { capacity: "256GB", price: 1099 },
             { capacity: "512GB", price: 1249 }
         ],
+        colorOptions: ["Black", "Silver", "Gold"],
         quantity: 1,
         },
         {
@@ -130,7 +142,11 @@
         title: "Xiaomi Redmi Note 11",
         description: "Budget-friendly smartphone with AMOLED display, Snapdragon processor, and 5000mAh battery.",
         price: 199,
-        images: ["images/iphone14pro-black.png"],
+        images: {
+            "Black": "images/iphone14pro-black.png",
+            "Silver": "images/iphone14pro-silver.png",
+            "Gold": "images/iphone14pro-gold.png"
+        },
         category: "Phones",
         properties: {
             brand: "Xiaomi",
@@ -142,6 +158,7 @@
             { capacity: "256GB", price: 1099 },
             { capacity: "512GB", price: 1249 }
         ],
+        colorOptions: ["Black", "Silver", "Gold"],
         quantity: 1,
         }
     ];
