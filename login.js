@@ -28,7 +28,13 @@ function handleLogin(e) {
     const rememberMe = document.getElementById('remember-me').checked;
 
     try {
-        const admin = db.findAdminByEmail(email);
+        const dbAdminData = JSON.parse(localStorage.getItem('dbAdmin'));
+        if (!dbAdminData || !dbAdminData.admins) {
+            showError('Admin database is not available. Please contact support.');
+            return;
+        }
+
+        const admin = dbAdminData.admins.find(admin => admin.email === email);
 
         if (!admin) {
             showError('Invalid email or password');
@@ -45,14 +51,21 @@ function handleLogin(e) {
             return;
         }
 
+        // "Remember Me"
         const storage = rememberMe ? localStorage : sessionStorage;
         storage.setItem('adminLoggedIn', 'true');
         storage.setItem('adminId', admin.id.toString());
         storage.setItem('adminName', admin.name);
         storage.setItem('adminRole', admin.role);
 
-        db.updateAdmin(admin.id, { lastLogin: new Date() });
+        // Update last login in dbAdmin and save back to localStorage
+        const adminIndex = dbAdminData.admins.findIndex(a => a.id === admin.id);
+        if (adminIndex !== -1) {
+            dbAdminData.admins[adminIndex].lastLogin = new Date().toISOString();
+            localStorage.setItem('dbAdmin', JSON.stringify(dbAdminData));
+        }
 
+        // Redirect to dashboard
         window.location.href = 'dashboard.html';
 
     } catch (error) {

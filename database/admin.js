@@ -1,32 +1,41 @@
-const db = {
+const dbAdmin = {
     admins: [
         {
-            id: 1,
+            id: 1001,
             name: "Seyf eddine",
             email: "admin@example.com",
             password: "admin123",
             status: "active",
             role: "superAdmin",
+            address: "123 Main St, Cityville",
+            phone: "+1234567890",
+            image: "images/avatar/admin1-avatar.png",
             createdAt: "2023-01-01T00:00:00Z",
             lastLogin: "2023-06-15T00:00:00Z"
         },
         {
-            id: 2,
+            id: 1002,
             name: "Wail nedjar",
             email: "wail@example.com",
             password: "secure456",
             status: "active",
             role: "admin",
+            address: "456 Elm St, Townsville",
+            phone: "+0987654321",
+            image: "images/avatar/admin2-avatar.png",
             createdAt: "2023-02-15T00:00:00Z",
             lastLogin: "2023-06-10T00:00:00Z"
         },
         {
-            id: 3,
+            id: 1003,
             name: "Mounder dehdouh",
             email: "mounder@example.com",
             password: "blocked123",
             status: "blocked",
             role: "admin",
+            address: "789 Oak St, Villagetown",
+            phone: "+1122334455",
+            image: "images/avatar/admin3-avatar.png",
             createdAt: "2023-03-20T00:00:00Z",
             lastLogin: "2023-04-01T00:00:00Z"
         }
@@ -52,9 +61,9 @@ const db = {
 };
 
 if (typeof window !== 'undefined') {
-    window.db = db;
+    window.dbAdmin = dbAdmin;
 }
 
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = db;
+    module.exports = dbAdmin;
 }

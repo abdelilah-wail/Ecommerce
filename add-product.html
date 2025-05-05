@@ -3,11 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add New Product | EcommerceAdmin</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles.css">
     <script src="script.js"></script>
+    <script src="add-product.js"></script>
 </head>
 
 <body class="bg-gray-100">
@@ -34,12 +35,6 @@
                         d="M20.25 7.5l-.63 10.63a2.25 2.25 0 01-2.25 2.12H6.62a2.25 2.25 0 01-2.25-2.12L3.75 7.5H10z" />
                 </svg>
                 Products
-            </a>
-            <a href="/categories.html" class="nav-link">
-                <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path d="M8.25 6.75h12M8.25 12h12M8.25 17.25h12M3.75 6.75h.007M3.75 12h.007M3.75 17.25h.007" />
-                </svg>
-                Categories
             </a>
             <a href="/orders.html" class="nav-link">
                 <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -82,7 +77,7 @@
         </div>
 
         <div class="bg-white rounded-lg shadow overflow-hidden">
-            <form class="p-6 space-y-6">
+            <form id="add-product-form" class="p-6 space-y-6">
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
                     <div>
                         <label for="product-name" class="block text-sm font-medium text-gray-700">Product Name</label>
@@ -91,7 +86,7 @@
                     </div>
                     <div>
                         <label for="product-sku" class="block text-sm font-medium text-gray-700">SKU</label>
-                        <input type="text" id="product-sku" name="product-sku"
+                        <input type="number" id="product-sku" name="product-sku"
                             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                     </div>
                 </div>
@@ -102,26 +97,36 @@
                         class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></textarea>
                 </div>
 
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                    <div>
+                        <label for="product-brand" class="block text-sm font-medium text-gray-700">Brand</label>
+                        <input type="text" id="product-brand" name="product-brand"
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    </div>
+                    <div>
+                        <label for="product-screen" class="block text-sm font-medium text-gray-700">Screen</label>
+                        <input type="text" id="product-screen" name="product-screen"
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    </div>
+                </div>
+
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
                     <div>
-                        <label for="product-price" class="block text-sm font-medium text-gray-700">Price</label>
-                        <div class="mt-1 relative rounded-md shadow-sm">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <span class="text-gray-500 sm:text-sm">$</span>
-                            </div>
-                            <input type="text" name="product-price" id="product-price"
-                                class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md py-2 px-3"
-                                placeholder="0.00">
-                        </div>
+                        <label for="product-status" class="block text-sm font-medium text-gray-700">Status</label>
+                        <select id="product-status" name="product-status"
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            <option>Active</option>
+                            <option>Inactive</option>
+                        </select>
                     </div>
                     <div>
                         <label for="product-category" class="block text-sm font-medium text-gray-700">Category</label>
                         <select id="product-category" name="product-category"
                             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                             <option>Select a category</option>
-                            <option>Electronics</option>
                             <option>Phones</option>
-                            <option>Ordinateur portable</option>
+                            <option>Laptops</option>
+                            <option>Tablets</option>
                         </select>
                     </div>
                     <div>
@@ -131,7 +136,80 @@
                             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                     </div>
                 </div>
-
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                    <div>
+                        <label for="product-color-options" class="block text-sm font-medium text-gray-700">Color
+                            Options</label>
+                        <div id="product-color-options" class="mt-2 grid grid-cols-3 gap-4">
+                            <div>
+                                <input type="checkbox" id="color-red" name="color-options" value="Red" class="hidden peer">
+                                <label for="color-red" class="block w-8 h-8 rounded-full bg-red-500 border-2 border-gray-300 cursor-pointer peer-checked:border-blue-500"></label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="color-blue" name="color-options" value="Blue" class="hidden peer">
+                                <label for="color-blue" class="block w-8 h-8 rounded-full bg-blue-500 border-2 border-gray-300 cursor-pointer peer-checked:border-blue-500"></label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="color-black" name="color-options" value="Black" class="hidden peer">
+                                <label for="color-black" class="block w-8 h-8 rounded-full bg-black border-2 border-gray-300 cursor-pointer peer-checked:border-blue-500"></label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="color-white" name="color-options" value="White" class="hidden peer">
+                                <label for="color-white" class="block w-8 h-8 rounded-full bg-white border-2 border-gray-300 cursor-pointer peer-checked:border-blue-500"></label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="color-green" name="color-options" value="Green" class="hidden peer">
+                                <label for="color-green" class="block w-8 h-8 rounded-full bg-green-500 border-2 border-gray-300 cursor-pointer peer-checked:border-blue-500"></label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="color-yellow" name="color-options" value="Yellow" class="hidden peer">
+                                <label for="color-yellow" class="block w-8 h-8 rounded-full bg-yellow-500 border-2 border-gray-300 cursor-pointer peer-checked:border-blue-500"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="product-storage-options" class="block text-sm font-medium text-gray-700">Storage
+                            Options</label>
+                        <div id="product-storage-options" class="mt-2 grid grid-cols-2 gap-4">
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="storage-64gb" name="storage-options" value="64GB" class="mr-2">
+                                <label for="storage-64gb" class="text-sm text-gray-700">64GB</label>
+                                <input type="number" id="price-64gb" name="price-64gb" placeholder="Price" 
+                                    class="mt-1 block w-20 border border-gray-300 rounded-md shadow-sm py-1 px-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" disabled>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="storage-128gb" name="storage-options" value="128GB" class="mr-2">
+                                <label for="storage-128gb" class="text-sm text-gray-700">128GB</label>
+                                <input type="number" id="price-128gb" name="price-128gb" placeholder="Price" 
+                                    class="mt-1 block w-20 border border-gray-300 rounded-md shadow-sm py-1 px-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" disabled>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="storage-256gb" name="storage-options" value="256GB" class="mr-2">
+                                <label for="storage-256gb" class="text-sm text-gray-700">256GB</label>
+                                <input type="number" id="price-256gb" name="price-256gb" placeholder="Price" 
+                                    class="mt-1 block w-20 border border-gray-300 rounded-md shadow-sm py-1 px-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" disabled>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="storage-512gb" name="storage-options" value="512GB" class="mr-2">
+                                <label for="storage-512gb" class="text-sm text-gray-700">512GB</label>
+                                <input type="number" id="price-512gb" name="price-512gb" placeholder="Price" 
+                                    class="mt-1 block w-20 border border-gray-300 rounded-md shadow-sm py-1 px-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" disabled>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="storage-1tb" name="storage-options" value="1TB" class="mr-2">
+                                <label for="storage-1tb" class="text-sm text-gray-700">1TB</label>
+                                <input type="number" id="price-1tb" name="price-1tb" placeholder="Price" 
+                                    class="mt-1 block w-20 border border-gray-300 rounded-md shadow-sm py-1 px-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" disabled>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="storage-2tb" name="storage-options" value="2TB" class="mr-2">
+                                <label for="storage-2tb" class="text-sm text-gray-700">2TB</label>
+                                <input type="number" id="price-2tb" name="price-2tb" placeholder="Price" 
+                                    class="mt-1 block w-20 border border-gray-300 rounded-md shadow-sm py-1 px-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Product Images</label>
                     <div
@@ -154,16 +232,6 @@
                             <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
                         </div>
                     </div>
-                </div>
-
-                <div>
-                    <label for="product-status" class="block text-sm font-medium text-gray-700">Status</label>
-                    <select id="product-status" name="product-status"
-                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                        <option>Active</option>
-                        <option>Inactive</option>
-                        <option>Draft</option>
-                    </select>
                 </div>
 
                 <div class="pt-5">
