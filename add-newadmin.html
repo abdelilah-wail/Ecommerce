@@ -10,7 +10,31 @@
     <script src="add-newadmin.js"></script>
     <script src="database/admin.js"></script>
     <script src="database/user.js"></script>
-    
+    <style>
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            max-width: 300px;
+        }
+        
+        .notification {
+            margin-bottom: 10px;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
 
 <body class="bg-gray-100">
@@ -113,7 +137,7 @@
                     <select id="admin-status" name="admin-status"
                         class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                         <option value="active">Active</option>
-                        <option value="inactive">Blocked</option>
+                        <option value="blocked">Blocked</option>
                     </select>
                 </div>
 

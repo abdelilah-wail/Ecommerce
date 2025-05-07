@@ -1,39 +1,58 @@
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('add-newadmin-form');
 
+    //! notification
+    let notificationContainer = document.querySelector('.notification-container');
+    if (!notificationContainer) {
+        notificationContainer = document.createElement('div');
+        notificationContainer.className = 'notification-container fixed top-4 right-4 z-50';
+        document.body.appendChild(notificationContainer);
+    }
+
+    function showNotification(message, type = 'success') {
+        const notification = document.createElement('div');
+        notification.className = `notification px-4 py-3 rounded shadow-md mb-4 ${
+            type === 'success' ? 'bg-green-100 border border-green-400 text-green-700' : 'bg-red-100 border border-red-400 text-red-700'
+        }`;
+        notification.textContent = message;
+
+        notificationContainer.appendChild(notification);
+
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.remove();
+            }
+        }, 3000);
+    }
+
     form.addEventListener('submit', function (e) {
         e.preventDefault();
 
-        // Get form values
         const name = document.getElementById('admin-name').value.trim();
         const email = document.getElementById('admin-email').value.trim();
         const password = document.getElementById('admin-password').value.trim();
         const role = document.getElementById('admin-role').value.trim();
         const status = document.getElementById('admin-status').value.trim();
 
-        // Validate required fields
         if (!name || !email || !password || !role || !status) {
-            alert('Please fill in all required fields.');
+            showNotification('Please fill in all required fields.', 'error');
             return;
         }
 
-        // Retrieve existing admins from localStorage
         const dbAdminData = JSON.parse(localStorage.getItem('dbAdmin')) || { admins: [] };
 
-        // Check for duplicate email
         const isDuplicateEmail = dbAdminData.admins.some(admin => admin.email === email);
         if (isDuplicateEmail) {
-            alert('An admin with this email already exists.');
+            showNotification('An admin with this email already exists.', 'error');
             return;
         }
 
-        // Create new admin object
         const newAdmin = {
-            id: dbAdminData.admins[dbAdminData.admins.length - 1].id + 1,
+            id: dbAdminData.admins.length > 0 ? dbAdminData.admins[dbAdminData.admins.length - 1].id + 1 : 1,
             name,
             email,
             password,
-            status,
+            status: status === 'blocked' ? 'blocked' : status,
             role,
             address: null,
             phone: null,
@@ -42,15 +61,12 @@ document.addEventListener('DOMContentLoaded', function () {
             lastLogin: null,
         };
 
-        // Add new admin to the list
         dbAdminData.admins.push(newAdmin);
 
-        // Save updated admins to localStorage
         localStorage.setItem('dbAdmin', JSON.stringify(dbAdminData));
 
-        // Get existing admins from localStorage
+        // update
         const dbAdmins = JSON.parse(localStorage.getItem('dbAdmin'));
-        // update the users in localStorage as well
         const combinedUsers = [...dbUsers.users, ...dbAdmins.admins.map(admin => ({
             id: admin.id,
             name: admin.name,
@@ -65,9 +81,13 @@ document.addEventListener('DOMContentLoaded', function () {
             lastLogin: admin.lastLogin
         }))];
         localStorage.setItem('users', JSON.stringify(combinedUsers));
-        console.log(combinedUsers);
 
+        showNotification('New admin added successfully!', 'success');
 
-        alert('New admin added successfully!');
+        form.reset();
+
+        setTimeout(() => {
+            window.location.href = 'users.html';
+        }, 2000);
     });
 });

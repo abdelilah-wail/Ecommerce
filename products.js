@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 let statusLabel = '';
                 let statusClasses = '';
 
-                if (product.quantity === 0) {
+                if (product.quantity === 0 && product.status === 'Out of Stock') {
                     statusLabel = 'Out of Stock';
                     statusClasses = 'bg-red-100 text-red-800';
                 } else if (product.status === 'Inactive') {
@@ -73,10 +73,8 @@ document.addEventListener('DOMContentLoaded', function () {
             searchResults.innerHTML = `Showing <span class="font-medium">${filteredProducts.length}</span> results`;
         }
 
-        // Initial render
         renderProducts(products);
 
-        // Combined filter logic
         function applyFilters() {
             const searchKeyword = searchInput.value.toLowerCase();
             const selectedCategory = categoryFilter.value;
@@ -84,7 +82,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             let filteredProducts = [...products];
 
-            // Filter by search keyword
             if (searchKeyword) {
                 filteredProducts = filteredProducts.filter(product =>
                     product.title.toLowerCase().includes(searchKeyword) ||
@@ -92,87 +89,60 @@ document.addEventListener('DOMContentLoaded', function () {
                 );
             }
 
-            // Filter by category
             if (selectedCategory !== 'All Categories') {
                 filteredProducts = filteredProducts.filter(product => product.category === selectedCategory);
             }
 
-            // Filter by status
             if (selectedStatus !== 'All Status') {
-                filteredProducts = filteredProducts.filter(product =>
-                    (selectedStatus === 'Active' && product.quantity > 0) ||
-                    (selectedStatus === 'Out of Stock' && product.quantity === 0) ||
-                    (selectedStatus === 'Inactive' && product.status === 'Inactive')
-                );
+                filteredProducts = filteredProducts.filter(product => {
+                    if (selectedStatus === 'Active') {
+                        return product.status === 'Active';
+                    } else if (selectedStatus === 'Out of Stock') {
+                        return product.quantity === 0;
+                    } else if (selectedStatus === 'Inactive') {
+                        return product.status === 'Inactive';
+                    }
+                    return true;
+                });
             }
 
             renderProducts(filteredProducts);
         }
 
-        // Event listeners for filters
+        //! kl mayatbadal option ydir applyFilters
         categoryFilter.addEventListener('change', applyFilters);
         statusFilter.addEventListener('change', applyFilters);
 
-        // Search functionality
+        //! search
         searchInput.addEventListener('input', () => {
             applyFilters();
         });
 
-        // Event for delete button
+        //! delete
         productsTableBody.addEventListener('click', function (e) {
             if (e.target.classList.contains('delete-btn')) {
                 e.preventDefault();
                 const row = e.target.closest('tr');
                 const id = parseInt(row.dataset.id, 10);
 
-                // Remove product from dbProductsData
                 dbProductsData.products = dbProductsData.products.filter(p => p.id !== id);
 
-                // Update the products variable
                 products = dbProductsData.products;
 
-                // Save updated products to localStorage
                 localStorage.setItem('dbProducts', JSON.stringify(dbProductsData));
 
-                // Re-render the table
                 renderProducts(products);
             }
         });
 
-        // Event for edit button
+        //! edit
         productsTableBody.addEventListener('click', function (e) {
             if (e.target.classList.contains('edit-btn')) {
                 e.preventDefault();
                 const row = e.target.closest('tr');
-                const id = parseInt(row.dataset.id, 10);
-                const product = dbProductsData.products.find(p => p.id === id);
+                const productId = row.dataset.id;
 
-                const quantityCell = row.children[3];
-                quantityCell.innerHTML = `<input type="number" value="${product.quantity}" class="quantity-input border px-2 py-1 w-16" />`;
-
-                e.target.textContent = 'Save';
-                e.target.classList.remove('edit-btn');
-                e.target.classList.add('save-btn');
-            } else if (e.target.classList.contains('save-btn')) {
-                e.preventDefault();
-                const row = e.target.closest('tr');
-                const id = parseInt(row.dataset.id, 10);
-                const input = row.querySelector('.quantity-input');
-                const newQuantity = parseInt(input.value, 10);
-
-                // Update product quantity in dbProductsData
-                const productIndex = dbProductsData.products.findIndex(p => p.id === id);
-                if (productIndex !== -1) {
-                    dbProductsData.products[productIndex].quantity = newQuantity;
-
-                    // Update the products variable
-                    products = dbProductsData.products;
-
-                    // Save to localStorage
-                    localStorage.setItem('dbProducts', JSON.stringify(dbProductsData));
-
-                    renderProducts(products);
-                }
+                window.location.href = `/edit-product.html?id=${productId}`;
             }
         });
     }

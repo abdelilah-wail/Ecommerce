@@ -9,6 +9,31 @@
     <script src="profile.js"></script>
     <script src="database/admin.js"></script>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            max-width: 300px;
+        }
+        
+        .notification {
+            margin-bottom: 10px;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -36,12 +61,6 @@
                 </svg>
                 Products
             </a>
-            <!-- <a href="/categories.html" class="nav-link">
-                <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path d="M8.25 6.75h12M8.25 12h12M8.25 17.25h12M3.75 6.75h.007M3.75 12h.007M3.75 17.25h.007" />
-                </svg>
-                Categories
-            </a> -->
             <a href="/orders.html" class="nav-link">
                 <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path
@@ -78,33 +97,78 @@
                 <!-- Name Field -->
                 <div>
                     <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-                    <input type="text" id="name" value="John Doe"
+                    <input type="text" id="name"
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 </div>
 
                 <!-- Email Field -->
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" id="email" value="johndoe@example.com"
+                    <input type="email" id="email"
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 </div>
 
                 <!-- Address Field -->
                 <div>
                     <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
-                    <input type="text" id="address" value="123 Main St, City, Country"
+                    <input type="text" id="address"
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 </div>
 
                 <!-- Phone Field -->
                 <div>
                     <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
-                    <input type="tel" id="phone" value="+1 234 567 890"
+                    <input type="tel" id="phone"
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 </div>
             </div>
             <button id="save-profile" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 Save Changes
+            </button>
+        </section>
+
+        <!-- Change Password Section -->
+        <section class="mb-10">
+            <h2 class="text-lg font-bold mb-4">Change Password</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Current Password Field -->
+                <div>
+                    <label for="current-password" class="block text-sm font-medium text-gray-700">Current Password</label>
+                    <div class="relative">
+                        <input type="password" id="current-password" readonly
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        <button type="button" class="toggle-password absolute inset-y-0 right-0 pr-3 flex items-center text-gray-300 text-sm font-medium">
+                            Show
+                        </button>
+                    </div>
+                </div>
+
+                <!-- New Password Field -->
+                <div>
+                    <label for="new-password" class="block text-sm font-medium text-gray-700">New Password</label>
+                    <div class="relative">
+                        <input type="password" id="new-password"
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        <button type="button" class="toggle-password absolute inset-y-0 right-0 pr-3 flex items-center text-gray-300 text-sm font-medium">
+                            Show
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Confirm New Password Field -->
+                <div>
+                    <label for="confirm-password" class="block text-sm font-medium text-gray-700">Confirm New Password</label>
+                    <div class="relative">
+                        <input type="password" id="confirm-password"
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        <button type="button" class="toggle-password absolute inset-y-0 right-0 pr-3 flex items-center text-gray-300 text-sm font-medium">
+                            Show
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <button id="change-password" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Change Password
             </button>
         </section>
     </main>

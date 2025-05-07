@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (logoutButton) {
         logoutButton.addEventListener('click', function () {
-            // Clear storage
+            //! clear
             localStorage.removeItem('adminLoggedIn');
             localStorage.removeItem('adminId');
             localStorage.removeItem('adminName');
@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', function () {
             sessionStorage.removeItem('adminName');
             sessionStorage.removeItem('adminRole');
 
-            // go to login page
             window.location.href = 'login.html';
         });
     }

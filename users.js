@@ -5,8 +5,31 @@ document.addEventListener('DOMContentLoaded', function () {
     const statusFilter = document.querySelector('select#statusFilter');
     const roleFilter = document.querySelector('select#roleFilter');
 
+    //! notification
+    let notificationContainer = document.querySelector('.notification-container');
+    if (!notificationContainer) {
+        notificationContainer = document.createElement('div');
+        notificationContainer.className = 'notification-container fixed top-4 right-4 z-50';
+        document.body.appendChild(notificationContainer);
+    }
+
+    function showNotification(message, type = 'success') {
+        const notification = document.createElement('div');
+        notification.className = `notification px-4 py-3 rounded shadow-md mb-4 ${type === 'success' ? 'bg-green-100 border border-green-400 text-green-700' : 'bg-red-100 border border-red-400 text-red-700'
+            }`;
+        notification.textContent = message;
+
+        notificationContainer.appendChild(notification);
+
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.remove();
+            }
+        }, 3000);
+    }
+
     if (usersTableBody) {
-        // Initialize users in localStorage if not already present
+        //! najma3ou
         if (!localStorage.getItem('users')) {
             const combinedUsers = [...dbUsers.users, ...dbAdmin.admins.map(admin => ({
                 id: admin.id,
@@ -24,29 +47,26 @@ document.addEventListener('DOMContentLoaded', function () {
             localStorage.setItem('users', JSON.stringify(combinedUsers));
         }
 
-        // Fetch users from localStorage
+        //! get users
         let users = JSON.parse(localStorage.getItem('users'));
 
 
         const adminId = localStorage.getItem('adminId') || sessionStorage.getItem('adminId');
 
-        // Get current logged-in user info
+        //! access
         const currentUser = users.find(user => String(user.id) === String(adminId));
         console.log("Current User:", currentUser);
         if (currentUser) {
             if (currentUser.role === 'superAdmin') {
-                // SuperAdmin sees all users and admins except himself
                 users = users.filter(user => user.id !== currentUser.id);
             } else if (currentUser.role === 'admin') {
-                // Admin sees only users
                 users = users.filter(user => user.role === 'customer');
             } else {
-                // Other roles see nothing (optional)
                 users = [];
             }
         }
 
-        // Populate the table with users
+        //! rnder
         function renderUsers(filteredUsers) {
             if (filteredUsers.length === 0) {
                 usersTableBody.innerHTML = `
@@ -107,10 +127,9 @@ document.addEventListener('DOMContentLoaded', function () {
             searchResults.innerHTML = `Showing <span class="font-medium">${filteredUsers.length}</span> results`;
         }
 
-        // Initial render
         renderUsers(users);
 
-        // Filter logic
+        //! Filter
         function applyFilters() {
             const searchKeyword = searchInput.value.toLowerCase();
             const selectedStatus = statusFilter.value;
@@ -118,7 +137,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             let filteredUsers = [...users];
 
-            // Filter by search keyword
             if (searchKeyword) {
                 filteredUsers = filteredUsers.filter(user =>
                     user.name.toLowerCase().includes(searchKeyword) ||
@@ -126,12 +144,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 );
             }
 
-            // Filter by status
             if (selectedStatus !== 'All Status') {
                 filteredUsers = filteredUsers.filter(user => user.status === selectedStatus.toLowerCase());
             }
 
-            // Filter by role
             if (selectedRole !== 'All Roles') {
                 filteredUsers = filteredUsers.filter(user => user.role === selectedRole.toLowerCase());
             }
@@ -139,12 +155,11 @@ document.addEventListener('DOMContentLoaded', function () {
             renderUsers(filteredUsers);
         }
 
-        // Event listeners for filters
         searchInput.addEventListener('input', applyFilters);
         statusFilter.addEventListener('change', applyFilters);
         roleFilter.addEventListener('change', applyFilters);
 
-        // Event listener for block/unblock and edit buttons
+        //! block/unblock and delete
         usersTableBody.addEventListener('click', function (e) {
             const row = e.target.closest('tr');
             const userId = parseInt(row.dataset.id, 10);
@@ -152,19 +167,41 @@ document.addEventListener('DOMContentLoaded', function () {
             if (e.target.classList.contains('block-btn')) {
                 const index = users.findIndex(user => user.id === userId);
                 if (index !== -1) {
-                    // Toggle user status
                     users[index].status = users[index].status === 'blocked' ? 'active' : 'blocked';
 
-                    // Save updated users to localStorage
                     localStorage.setItem('users', JSON.stringify(users));
 
-                    // Re-render the table
                     renderUsers(users);
+
+                    showNotification(`User ${users[index].status === 'blocked' ? 'blocked' : 'unblocked'} successfully.`, 'success');
                 }
             }
 
             if (e.target.classList.contains('delete-btn')) {
-                alert('Delete functionality is not implemented yet.');
+                const confirmDelete = confirm('Are you sure you want to delete this user?');
+                if (confirmDelete) {
+                    const index = users.findIndex(user => user.id === userId);
+                    if (index !== -1) {
+                        if (users[index].role === 'admin') {
+                            const dbAdminData = JSON.parse(localStorage.getItem('dbAdmin')) || { admins: [] };
+                            const adminIndex = dbAdminData.admins.findIndex(admin => admin.id === userId);
+                            if (adminIndex !== -1) {
+                                dbAdminData.admins.splice(adminIndex, 1);
+                                localStorage.setItem('dbAdmin', JSON.stringify(dbAdminData));
+                            }
+                        }
+
+                        users.splice(index, 1);
+
+                        localStorage.setItem('users', JSON.stringify(users));
+
+                        renderUsers(users);
+
+                        showNotification('User deleted successfully.', 'success');
+                    } else {
+                        showNotification('User not found.', 'error');
+                    }
+                }
             }
         });
     }

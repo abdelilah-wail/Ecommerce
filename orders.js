@@ -3,18 +3,19 @@ document.addEventListener('DOMContentLoaded', function () {
     const searchInput = document.querySelector('input[placeholder="Search orders..."]');
     const statusFilter = document.querySelector('select:nth-of-type(1)');
     const dateFilter = document.querySelector('select:nth-of-type(2)');
+    const exportOrdersButton = document.getElementById('export-orders');
 
-    // Initialize orders in localStorage if not already present
     if (!localStorage.getItem('dbOrders')) {
         localStorage.setItem('dbOrders', JSON.stringify(dbOrders));
     }
 
-    // Fetch orders from localStorage
     let dbOrdersData = JSON.parse(localStorage.getItem('dbOrders'));
     let orders = dbOrdersData.orders;
 
-    // Render orders in the table
+    //! render
     function renderOrders(filteredOrders) {
+        const searchResults = document.getElementById('searchResults');
+
         if (filteredOrders.length === 0) {
             ordersTableBody.innerHTML = `
                 <tr>
@@ -23,25 +24,24 @@ document.addEventListener('DOMContentLoaded', function () {
                     </td>
                 </tr>
             `;
+            if (searchResults) {
+                searchResults.innerHTML = `Showing <span class="font-medium">0</span> results`;
+            }
             return;
         }
 
         ordersTableBody.innerHTML = filteredOrders.map(order => {
             let statusClasses = '';
 
-            switch (order.status) {
-                case 'Completed':
-                    statusClasses = 'bg-green-100 text-green-800';
-                    break;
-                case 'Pending':
-                    statusClasses = 'bg-yellow-100 text-yellow-800';
-                    break;
-                case 'Processing':
-                    statusClasses = 'bg-blue-100 text-blue-800';
-                    break;
-                case 'Cancelled':
-                    statusClasses = 'bg-red-100 text-red-800';
-                    break;
+            //! status
+            if (order.status === 'Completed') {
+                statusClasses = 'bg-green-100 text-green-800';
+            } else if (order.status === 'Pending') {
+                statusClasses = 'bg-yellow-100 text-yellow-800';
+            } else if (order.status === 'Processing') {
+                statusClasses = 'bg-blue-100 text-blue-800';
+            } else if (order.status === 'Cancelled') {
+                statusClasses = 'bg-red-100 text-red-800';
             }
 
             return `
@@ -62,12 +62,44 @@ document.addEventListener('DOMContentLoaded', function () {
                 </tr>
             `;
         }).join('');
+
+        //! search number
+        if (searchResults) {
+            searchResults.innerHTML = `Showing <span class="font-medium">${filteredOrders.length}</span> results`;
+        }
     }
 
-    // Initial render
+    //! CSV
+    function exportOrdersToCSV() {
+        const csvHeaders = ['Order ID', 'Customer', 'Date', 'Status', 'Total'];
+        const csvRows = orders.map(order => [
+            order.orderId,
+            order.customer,
+            new Date(order.date).toLocaleDateString(),
+            order.status,
+            `$${order.total.toFixed(2)}`
+        ]);
+
+        const csvContent = [
+            csvHeaders.join(','),
+            ...csvRows.map(row => row.join(','))
+        ].join('\n');
+
+        //! download
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'orders_history.csv';
+        link.click();
+        URL.revokeObjectURL(url);
+    }
+
+    exportOrdersButton.addEventListener('click', exportOrdersToCSV);
+
     renderOrders(orders);
 
-    // Filter orders
+    // Filter
     function applyFilters() {
         const searchKeyword = searchInput.value.toLowerCase();
         const selectedStatus = statusFilter.value;
@@ -75,7 +107,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         let filteredOrders = orders;
 
-        // Filter by search keyword
         if (searchKeyword) {
             filteredOrders = filteredOrders.filter(order =>
                 order.orderId.toLowerCase().includes(searchKeyword) ||
@@ -83,12 +114,10 @@ document.addEventListener('DOMContentLoaded', function () {
             );
         }
 
-        // Filter by status
         if (selectedStatus !== 'All Status') {
             filteredOrders = filteredOrders.filter(order => order.status === selectedStatus);
         }
 
-        // Filter by date range
         if (selectedDateRange !== 'All') {
             const now = new Date();
             filteredOrders = filteredOrders.filter(order => {
@@ -109,23 +138,26 @@ document.addEventListener('DOMContentLoaded', function () {
         renderOrders(filteredOrders);
     }
 
-    // Event listeners for filters
     searchInput.addEventListener('input', applyFilters);
     statusFilter.addEventListener('change', applyFilters);
     dateFilter.addEventListener('change', applyFilters);
 
-    // Handle update and delete actions
+    //! update/delete
     ordersTableBody.addEventListener('click', function (e) {
         const orderId = e.target.dataset.id;
 
         if (e.target.classList.contains('update-status-btn')) {
-            const newStatus = prompt('Enter new status (Pending, Processing, Completed, Cancelled):');
-            if (newStatus && ['Pending', 'Processing', 'Completed', 'Cancelled'].includes(newStatus)) {
+            const newStatus = prompt('Enter new status (Pending, Processing, Completed):');
+
+            if (newStatus === null) {
+                return;
+            }
+
+            if (['Pending', 'Processing', 'Completed'].includes(newStatus)) {
                 const orderIndex = orders.findIndex(order => order.orderId === orderId);
                 if (orderIndex !== -1) {
                     orders[orderIndex].status = newStatus;
 
-                    // Save updated orders to localStorage
                     dbOrdersData.orders = orders;
                     localStorage.setItem('dbOrders', JSON.stringify(dbOrdersData));
 
@@ -133,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     alert('Order status updated successfully!');
                 }
             } else {
-                alert('Invalid status entered.');
+                alert('Invalid status entered. Please enter one of the following: Pending, Processing, Completed.');
             }
         }
 
@@ -141,7 +173,6 @@ document.addEventListener('DOMContentLoaded', function () {
             if (confirm('Are you sure you want to delete this order?')) {
                 orders = orders.filter(order => order.orderId !== orderId);
 
-                // Save updated orders to localStorage
                 dbOrdersData.orders = orders;
                 localStorage.setItem('dbOrders', JSON.stringify(dbOrdersData));
 

@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const storageOptions = document.querySelectorAll('input[name="storage-options"]');
 
-    // Add event listeners to toggle price input fields
+    //! disable price
     storageOptions.forEach((checkbox) => {
         checkbox.addEventListener('change', function () {
             const priceInput = document.getElementById(`price-${checkbox.id.split('-')[1]}`);
@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function () {
     form.addEventListener('submit', function (e) {
         e.preventDefault();
 
-        // Select all elements by id
         const id = parseInt(document.getElementById('product-sku').value.trim(), 10);
         const title = document.getElementById('product-name').value.trim();
         const description = document.getElementById('product-description').value.trim();
@@ -30,17 +29,16 @@ document.addEventListener('DOMContentLoaded', function () {
         const quantity = parseInt(document.getElementById('product-stock').value.trim(), 10);
         const status = document.getElementById('product-status').value.trim();
 
-        // Validate required fields
         if (!id || !title || !description || !brand || isNaN(quantity) || !status) {
             alert('Please fill in all required fields.');
             return;
         }
 
-        // Handle file upload
+        //! file not working 
         let imageMain = '';
         if (fileInput.files.length > 0) {
             const file = fileInput.files[0];
-            imageMain = URL.createObjectURL(file); // Create a temporary URL for the uploaded file
+            imageMain = URL.createObjectURL(file);
         }
 
         const colorOptions = Array.from(document.querySelectorAll('input[name="color-options"]:checked')).map(el => {
@@ -64,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
             id,
             title,
             description,
-            images: [imageMain], // Use the temporary URL for the image
+            images: [imageMain],
             category,
             properties: {
                 brand,

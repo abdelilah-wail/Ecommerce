@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (avatarElem) avatarElem.src = adminData.image || 'images/avatar/default-avatar.png';
     }
 
-    // Recent Orders
+    // recent orders
     const recentOrdersTableBody = document.getElementById('recent-orders');
     if (recentOrdersTableBody) {
         const dbOrdersData = JSON.parse(localStorage.getItem('dbOrders'));
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
         `).join('');
     }
 
-    // Out of Stock Products
+    // out of stock products
     const outOfStockTableBody = document.getElementById('out-of-stock-products');
     if (outOfStockTableBody) {
         const dbProductsData = JSON.parse(localStorage.getItem('dbProducts'));
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
         `).join('');
     }
 
-    // Dashboard Stats
+    // stats
     const totalRevenueElem = document.getElementById('total-revenue');
     const totalOrdersElem = document.getElementById('total-orders');
     const totalProductsElem = document.getElementById('total-products');
