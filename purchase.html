@@ -93,30 +93,34 @@
 
                 <div class="summary-details">
                     <span>Subtotal</span>
-                    <span>$2347.00</span>
+                    <span class="subtotal-price">$0.00</span>
                 </div>
                 <div class="summary-details">
                     <span>Estimated Tax</span>
-                    <span>$50.00</span>
+                    <span class="tax-price">$0.00</span>
                 </div>
                 <div class="summary-details">
                     <span>Shipping</span>
-                    <span>$29.00</span>
+                    <span class="shipping-price">$0.00</span>
                 </div>
                 <div class="summary-details total">
                     <span>Total</span>
-                    <span>$2426.00</span>
+                    <span class="total-price">$0.00</span>
                 </div>
-
                 <div>
                     <button type="submit"
                         class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                         Proceed to Checkout
                     </button>
+                    <button id="cashOnDeliveryBtn" type="button"
+                        class="w-full mt-4 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                        Cash on Delivery
+                    </button>
                 </div>
             </form>
-        </div>
     </div>
+
+    <script src="purchase.js" type="module"></script>
 </body>
 
 </html>

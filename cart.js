@@ -1,4 +1,5 @@
-// Initialize cart from localStorage
+
+// Initialize cart array
 let cart = [];
 
 // Load cart data when page loads
@@ -12,9 +13,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Load cart from localStorage
 function loadCartFromLocalStorage() {
-    const storedCart = localStorage.getItem('cart');
-    if (storedCart) {
-        cart = JSON.parse(storedCart);
+    try {
+        const storedCart = localStorage.getItem('cart');
+        if (storedCart) {
+            cart = JSON.parse(storedCart);
+            console.log('Loaded cart from localStorage:', cart); // Debug log
+        }
+    } catch (error) {
+        console.error('Error loading cart from localStorage:', error);
+        // Initialize empty cart if there's an error
+        cart = [];
+        saveCartToLocalStorage();
+    }
+}
+
+// Save cart to localStorage
+function saveCartToLocalStorage() {
+    try {
+        localStorage.setItem('cart', JSON.stringify(cart));
+        console.log('Saved cart to localStorage:', cart); // Debug log
+    } catch (error) {
+        console.error('Error saving cart to localStorage:', error);
     }
 }
 
@@ -35,14 +54,19 @@ function displayCartItems() {
         item.className = 'item-card bg-white p-4 rounded-lg shadow-xl mb-4';
         item.dataset.productId = index;
 
+        // Get the first image (handles both array and object formats)
+        const firstImage = Array.isArray(product.images) ?
+            product.images[0] :
+            product.images[Object.keys(product.images)[0]];
+
         item.innerHTML = `
             <div class="flex flex-col gap-4">
-                <img src="${Array.isArray(product.images) ? product.images[0] : product.images[product.colorOptions ? product.colorOptions[0] : '']}"
+                <img src="${firstImage}"
                      class="w-full ml-[25%] md:w-32 h-32 object-contain rounded-md">
 
                 <div class="flex-grow">
                     <h2 class="text-lg font-bold">${product.title}</h2>
-                    <p class="text-gray-600 text-sm mb-2">${product.description}</p>
+                    ${product.description ? `<p class="text-gray-600 text-sm mb-2">${product.description}</p>` : ''}
 
                     <div class="flex items-center justify-between">
                         <div class="flex items-center">
@@ -50,7 +74,7 @@ function displayCartItems() {
                                 -
                             </button>
                             <span class="quantity-display bg-gray-100 px-4 py-1">
-                                ${product.quantity}
+                                ${product.quantity || 1}
                             </span>
                             <button class="increase-quantity bg-gray-200 px-3 py-1 rounded-r hover:bg-gray-300">
                                 +
@@ -58,7 +82,7 @@ function displayCartItems() {
                         </div>
 
                         <p class="text-lg font-bold text-[#5C6BC0]">
-                            $${(product.price * product.quantity).toFixed(2)}
+                            $${((product.price || 0) * (product.quantity || 1)).toFixed(2)}
                         </p>
                     </div>
 
@@ -95,7 +119,7 @@ function updateCartTotal() {
 // Calculate total cart value
 function calculateCartTotal() {
     return cart.reduce((total, product) => {
-        return total + (product.price * product.quantity);
+        return total + ((product.price || 0) * (product.quantity || 1));
     }, 0);
 }
 
@@ -111,7 +135,7 @@ function updateNavbarCartCount() {
 
 // Calculate total number of items (sum of quantities)
 function calculateTotalItems() {
-    return cart.reduce((total, product) => total + product.quantity, 0);
+    return cart.reduce((total, product) => total + (product.quantity || 1), 0);
 }
 
 // Setup event listeners
@@ -129,11 +153,14 @@ document.addEventListener('click', function(e) {
     if (!itemCard) return;
 
     const productId = parseInt(itemCard.dataset.productId);
+    if (isNaN(productId)) return;
+
     const product = cart[productId];
+    if (!product) return;
 
     // Increase quantity
     if (e.target.classList.contains('increase-quantity')) {
-        product.quantity += 1;
+        product.quantity = (product.quantity || 1) + 1;
         saveCartAndRefresh();
     }
 
@@ -156,15 +183,18 @@ document.addEventListener('click', function(e) {
     // Purchase item
     if (e.target.classList.contains('confirm-from-cart-btn') ||
        e.target.closest('.confirm-from-cart-btn')) {
-        // Redirect to purchase page
+        // Save cart before redirecting
+        saveCartToLocalStorage();
         window.location.href = 'purchase.html';
     }
 });
 
 // Remove item from cart
 function removeItemFromCart(productId) {
-    cart.splice(productId, 1);
-    saveCartAndRefresh();
+    if (productId >= 0 && productId < cart.length) {
+        cart.splice(productId, 1);
+        saveCartAndRefresh();
+    }
 }
 
 // Clear entire cart
@@ -181,11 +211,6 @@ function saveCartAndRefresh() {
     displayCartItems();
     updateCartTotal();
     updateNavbarCartCount();
-}
-
-// Save cart to localStorage
-function saveCartToLocalStorage() {
-    localStorage.setItem('cart', JSON.stringify(cart));
 }
 
 // Navigation active state

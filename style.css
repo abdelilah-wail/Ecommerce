@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-
 body {
     padding-left: 10px;
     padding-right: 10px;
@@ -97,11 +96,92 @@ body {
     margin-top: 250px;
 }
 
+/* Extra Small Phones (iPhone SE, old Android phones) */
+@media (max-width: 480px) {
+    .aside-products{
+        display: none;
+    }
+    .featured-products {
+      padding: 60px 20px !important;
+      height: auto !important;
+    }
+    .featured-products{
+        background-image: url(images/icons/success.svg);
+        background-size: 10px 10px;
+        box-shadow: 3px 4px 10px grey;
+        background-color: lightgray;
+        background-position: -100px -100px;
+        background-repeat: no-repeat;
+        /* border-top: 2px  solid black; */
+    }
+
+    .categorie-card {
+      width: 90% !important;
+      margin: 0 auto;
+    }
+
+    .categorie-card-btn {
+      width: 100%;
+      margin-top: 200px !important;
+    }
+
+    .shopping-btn {
+      font-size: 18px !important;
+      margin-left: 10% !important;
+    }
+
+    .footer {
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: 15px;
+    }
 
 
+    /* header .nav-link {
+      display: none;
+    } */
 
+    #desktopNav {
+      display: none !important;
+    }
 
+    .signup-btn {
+      margin-left: auto !important;
+      margin-right: auto !important;
+      bottom: -150px !important;
+    }
+  }
 
+  /* Larger Phones / Small Tablets (481px - 767px) */
+  @media (min-width: 481px) and (max-width: 767px) {
+    .featured-products{
+        background-image: url(images/icons/success.svg);
+        background-size: 10px 10px;
+        box-shadow: 3px 4px 10px grey;
+        background-color: lightgray;
+        background-position: -100px -100px;
+        background-repeat: no-repeat;
+        /* border-top: 2px  solid black; */
+    }
+    .aside-products{
+        display: none;
+    }
+    .categorie-card-btn {
+      margin-top: 200px !important;
+    }
+
+    .shopping-btn {
+      font-size: 20px !important;
+      margin-left: 15% !important;
+    }
+
+    .signup-btn {
+      bottom: -160px !important;
+    }
+    #desktopNav {
+        display: none !important;
+      }
+  }
 
 
 /* !products html */
@@ -148,6 +228,11 @@ aside{
     border-radius: 4px;
     transition: all 0.3s ease;
   }
+
+
+
+
+
 /* !product-detail page  */
 /* Storage Options Styling */
 .storage-option {

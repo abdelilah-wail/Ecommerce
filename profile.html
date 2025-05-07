@@ -9,35 +9,56 @@
 </head>
 <body>
     <!-- Header -->
-    <header class="bg-white">
-        <div class="max-w-[90%] m-auto flex justify-between items-center p-4">
-            <a href="index.html" class="flex items-center justify-center">
-                <p class="ml-2 text-2xl">𝘿𝙞𝙜𝙞𝙩𝙖𝙡 𝘿𝙚𝙖𝙡𝙨.</p>
-            </a>
-            <nav class="flex items-center space-x-4">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="products.html" class="nav-link">Shop</a>
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-screen-xl mx-auto flex justify-between items-center p-4">
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center text-2xl font-bold">Digital Deals.</a>
 
-                <!-- These will show only when logged in -->
+            <!-- Desktop Nav -->
+            <nav id="desktopNav" class="sm:hidden md:flex items-center space-x-6">
+                <a href="index.html" class="nav-link hover:text-gray-700">Home</a>
+                <a href="products.html" class="nav-link hover:text-gray-700">Shop</a>
+
+                <!-- Authenticated Links -->
                 <div id="authLinks" class="flex items-center space-x-4">
-                    <a href="cart.html" class="nav-link flex justify-between items-center">
-                        <img src="images/icons/cart.svg" alt="cart icon">
-                        <p class="cart-logo"> (0)</p>
-                    </a>
-                    <a href="profile.html" class="nav-link">
-                        <img src="images/icons/profile.svg" class="w-8 h-8" alt="profile icon">
-                    </a>
+                <a href="cart.html" class="nav-link flex items-center">
+                    <img src="images/icons/cart.svg" alt="cart icon" class="w-6 h-6">
+                    <span class="cart-logo ml-1">(0)</span>
+                </a>
+                <a href="profile.html" class="nav-link">
+                    <img src="images/icons/profile.svg" class="w-8 h-8" alt="profile icon">
+                </a>
                 </div>
 
-                <!-- This will show only when logged out -->
+                <!-- Guest Links -->
                 <div id="guestLinks" class="flex items-center space-x-4">
-                    <a href="login.html" class="nav-link login-btn">Login</a>
+                <a href="login.html" class="nav-link login-btn">Login</a>
                 </div>
 
-                <!-- Logout button (shown when logged in) -->
-                <button id="logoutBtn" class="hidden nav-link logout-btn">Logout</button>
+                <!-- Logout Button -->
+                <button id="logoutBtn" class="hidden logout-btn">Logout</button>
             </nav>
+
+            <!-- Mobile Menu Button -->
+            <button id="menuBtn" class="md:hidden focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                    stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
         </div>
+
+        <!-- Mobile Nav -->
+        <nav id="mobileNav" class="md:hidden hidden bg-white shadow-lg p-4 space-y-4">
+            <a href="index.html" class="block nav-link">Home</a>
+            <a href="products.html" class="block nav-link">Shop</a>
+            <a href="cart.html" class="block nav-link">Cart (0)</a>
+            <a href="profile.html" class="block nav-link">
+                <img src="images/icons/profile.svg" class="w-8 h-8" alt="profile icon">
+            </a>
+            <a href="login.html" class="block nav-link login-btn text-center">Login</a>
+            <button id="logoutBtnMobile" class="block w-full text-center nav-link logout-btn">Logout</button>
+        </nav>
     </header>
 
     <!-- Main Content -->
@@ -45,92 +66,88 @@
         <h1 class="text-2xl font-bold mb-6">My Profile</h1>
 
         <!-- Profile Information Section -->
+        <!-- In profile.html, replace the Profile Information Section with this: -->
         <section class="mb-10">
             <h2 class="text-lg font-bold mb-4">Profile Information</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <form id="profileForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Name Field -->
                 <div>
                     <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-                    <input type="text" id="name" value="Wail Nedjar" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <input type="text" id="name" name="name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 </div>
 
                 <!-- Email Field -->
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" id="email" value="nedjar.abdelilah.wail@gmail.com" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <input type="email" id="email" name="email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 </div>
 
                 <!-- Address Field -->
                 <div>
                     <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
-                    <input type="text" id="address" value="New York, USA" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <input type="text" id="address" name="address" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 </div>
 
                 <!-- Phone Field -->
                 <div>
                     <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
-                    <input type="tel" id="phone" value="+562 51 00 29" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <input type="tel" id="phone" name="phone" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 </div>
-            </div>
-            <button class="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
-                Save Changes
-            </button>
+
+                <div class="md:col-span-2">
+                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
+                        Save Changes
+                    </button>
+                </div>
+            </form>
         </section>
 
         <!-- Order History Section -->
+        <!-- Replace the entire Order History section in profile.html with this: -->
         <section>
             <h2 class="text-lg font-bold mb-4">Order History</h2>
-            <div class="space-y-4">
-                <!-- Example Order -->
-                <div class="bg-gray-100 p-4 rounded-lg">
-                    <h3 class="text-md font-bold">Order #12345</h3>
-                    <p class="text-sm text-gray-600">Placed on: January 1, 2023</p>
-                    <p class="text-sm text-gray-600">Total: $299.99</p>
-                    <button class="mt-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-1 px-3 rounded text-xs">
-                        View Details
-                    </button>
-                </div>
-
-                <!-- Example Order -->
-                <div class="bg-gray-100 p-4 rounded-lg">
-                    <h3 class="text-md font-bold">Order #67890</h3>
-                    <p class="text-sm text-gray-600">Placed on: February 15, 2023</p>
-                    <p class="text-sm text-gray-600">Total: $49.99</p>
-                    <button class="mt-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-1 px-3 rounded text-xs">
-                        View Details
-                    </button>
-                </div>
+            <div id="order-history" class="space-y-4">
+                <!-- Orders will be dynamically added here -->
             </div>
         </section>
     </main>
 
     <!-- Footer -->
-    <footer class="mt-20 p-5 flex justify-between items-center text-[#222]">
+    <div class="footer  mt-20 p-5  flex justify-between items-center text-[#222]">
         <div>
-            <img src="images/icons/shipping.svg" alt="" class="w-8 h-8">
+            <img src="images/icons/shipping.svg" alt>
             <p class="font-bold">Free shipping</p>
             <p class="text-[#666]">Free shipping on all orders over $150</p>
         </div>
         <div>
-            <img src="images/icons/dollar.svg" alt="" class="w-8 h-8">
+            <img src="images/icons/dollar.svg" alt>
             <p class="font-bold">Money Guarantee</p>
             <p class="text-[#666]">within 30 days for an exchange</p>
         </div>
         <div>
-            <img src="images/icons/support.svg" alt="" class="w-8 h-8">
-            <p class="font-bold">Online Support</p>
-            <p class="text-[#666]">24 hours a day, 7 days a week</p>
+            <img src="images/icons/support.svg" alt>
+            <p class="font-bold">online support</p>
+            <p class="text-[#666]">24 hours a day , 7 days a week</p>
         </div>
         <div>
-            <img src="images/icons/payment.svg" alt="" class="w-8 h-8">
+            <img src="images/icons/payment.svg" alt>
             <p class="font-bold">Flexible Payment</p>
             <p class="text-[#666]">Pay with multiple credit cards</p>
         </div>
-    </footer>
-    <p class="text-[#666] ml-[78%]">@2023 Copyright Wic Digital Deals</p>
-    <script src="profile.js"></script>
+    </div>
+    <p class="text-[#666] ml-[87%]">@Digital-Deals-2023</p>
+    <!-- In profile.html, change the script tag to: -->
+    <script src="profile.js" type="module"></script>
     <script src="database.js"></script>
     <script src="auth.js" type="module"></script>
     <script src="navbar.js" type="module"></script>
+    <script>
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+
+        menuBtn.addEventListener('click', () => {
+            mobileNav.classList.toggle('hidden');
+        });
+    </script>
 </body>
 </html>

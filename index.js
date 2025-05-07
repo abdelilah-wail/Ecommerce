@@ -37,3 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
     loadCartFromLocalStorage();
     updateNavbarCartCount();
 });
+
+// In index.html
+function redirectToCategory(category) {
+    window.location.href = `products.html?category=${encodeURIComponent(category)}`;
+}

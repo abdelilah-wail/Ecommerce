@@ -77,7 +77,7 @@ function addToCart(product, storageOption = null) {
     notification.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg';
     notification.textContent = `Added ${product.title}${storageOption ? ` (${storageOption.capacity})` : ''} to cart!`;
     document.body.appendChild(notification);
-    setTimeout(() => notification.remove(), 2000);
+    setTimeout(() => notification.remove(), 700);
 }
 
 // Render products to the grid
@@ -180,28 +180,57 @@ function handleSearch(e) {
     renderProducts(currentProducts);
 }
 
-// Initialize page
+function getUrlParameter(name) {
+    name = name.replace(/[\[\]]/g, '\\$&');
+    const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+    const results = regex.exec(window.location.search);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+
+
 document.addEventListener('DOMContentLoaded', () => {
     loadCartFromLocalStorage();
     updateNavbarCartCount();
 
-    // Initialize with all products
-    currentProducts = [...products];
+    // Get category from URL if it exists
+    const urlCategory = getUrlParameter('category');
+
+    // Initialize with all products or filtered by URL category
+    if (urlCategory) {
+        currentProducts = products.filter(p => p.category === urlCategory);
+        // Find and activate the corresponding category link
+        const categoryLink = document.querySelector(`.category-link[data-category="${urlCategory}"]`);
+        if (categoryLink) {
+            document.querySelectorAll('.category-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            categoryLink.classList.add('active');
+        }
+    } else {
+        currentProducts = [...products];
+        // Set default active category (All)
+        const allCategoryLink = document.querySelector('.category-link[data-category="All"]');
+        if (allCategoryLink) {
+            allCategoryLink.classList.add('active');
+        }
+    }
+
     renderProducts(currentProducts);
 
-    // Setup search functionality
+    // Rest of your existing code...
     const searchInput = document.getElementById('product-search');
     if (searchInput) {
         searchInput.addEventListener('input', handleSearch);
     }
 
-    // Category filtering with enhanced styling
     document.querySelectorAll(".category-link").forEach(link => {
         link.addEventListener("click", (e) => {
             e.preventDefault();
             const category = link.dataset.category;
 
-            // Update active category styling with transition
             document.querySelectorAll('.category-link').forEach(link => {
                 link.classList.remove('active');
             });
@@ -215,18 +244,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             renderProducts(currentProducts);
 
-            // Reset search input when category changes
             if (searchInput) searchInput.value = '';
         });
     });
 
-    // Set initial active category (All) with styling
-    const allCategoryLink = document.querySelector('.category-link[data-category="All"]');
-    if (allCategoryLink) {
-        allCategoryLink.classList.add('active');
-    }
-
-    // Navigation active state
     const currentPage = window.location.pathname.split("/").pop();
     document.querySelectorAll(".nav-link").forEach(link => {
         if (link.getAttribute("href") === currentPage) {
@@ -234,6 +255,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
-
 // Import auth function
 import { isLoggedIn } from './auth.js';
